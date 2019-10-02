@@ -56,8 +56,7 @@ class BuildPyCommand(setuptools.command.build_py.build_py):
         copy_files(glob.glob(os.path.join(UTM_XSD_DIR, '*.xsd')), xsd_dir)
         copy_files(glob.glob(os.path.join(UTM_XSD_DIR, 'xsd-type', '*.xsd')), xsd_type_dir)
         # run SWIG to (re)create bindings module
-        module_i = os.path.join(UTM_ROOT, PACKAGE_NAME, PACKAGE_NAME+'.i')
-        subprocess.check_call(['swig', '-c++', '-python', '-outcurrentdir', '-I{}'.format(UTM_ROOT), module_i])
+        subprocess.check_call(['swig', '-c++', '-python', '-outcurrentdir', '-I{}'.format(UTM_ROOT), '{}.i'.format(PACKAGE_NAME)])
         # (re)create version module
         with open('version.py', 'w') as f:
             f.write("__version__ = '{}'".format(UTM_VERSION))

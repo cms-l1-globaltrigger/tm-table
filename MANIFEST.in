@@ -1,0 +1,5 @@
+include tmTable/xsd/*.xsd
+include tmTable/xsd-type/*.xsd
+
+include README.md
+include LICENSE

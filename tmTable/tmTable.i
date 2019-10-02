@@ -1,4 +1,4 @@
-%module(package="tmTable", moduleimport="import $module") tmTable
+%module(moduleimport="import $module") tmTable
 
 %include <std_vector.i>
 %include <std_string.i>

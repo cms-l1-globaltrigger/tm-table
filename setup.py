@@ -77,6 +77,8 @@ tmTable_ext = Extension(
     ],
     include_dirs=[
         UTM_ROOT,
+        os.path.join(UTM_ROOT, PACKAGE_NAME),
+        
     ],
     library_dirs=[
         PACKAGE_DIR,

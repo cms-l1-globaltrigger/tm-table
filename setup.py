@@ -87,7 +87,7 @@ tmTable_ext = Extension(
         os.path.join(UTM_ROOT, PACKAGE_NAME),
     ],
     libraries=['xerces-c', 'tmutil', 'tmxsd', 'tmtable'],
-    extra_compile_args=["-std=c++11"],
+    extra_compile_args=['-std=c++11'],
 )
 
 setup(

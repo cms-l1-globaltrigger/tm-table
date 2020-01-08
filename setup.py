@@ -7,7 +7,7 @@ import os
 from setuptools import setup, Extension
 import setuptools.command.build_py
 
-UTM_VERSION = '0.7.3'
+UTM_VERSION = '0.7.4'
 PACKAGE_NAME = 'tmTable'
 PACKAGE_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), PACKAGE_NAME))
 
@@ -77,7 +77,7 @@ tmTable_ext = Extension(
     include_dirs=[
         UTM_ROOT,
         os.path.join(UTM_ROOT, PACKAGE_NAME),
-        
+
     ],
     library_dirs=[
         PACKAGE_DIR,

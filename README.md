@@ -35,7 +35,7 @@ pip install https://github.com/cms-l1-globaltrigger/tm-table/releases/download/0
 ## Build instructions
 
 **Note:** building the Python bindings from scratch is only recommended for
-development.
+development. To create portable Python bindings use the [tm-manylinux](https://github.com/cms-l1-globaltrigger/tm-manylinux) Docker image.
 
 First check out and build all utm libraries.
 
@@ -50,9 +50,7 @@ make all CPPFLAGS='-DNDEBUG -DSWIG'  # compile with -DSWIG
 cd ..
 ```
 
-Next build the Python bindings and pack them into a wheel.
-
-**Note:** it is recommended to execute this in a virtual environment.
+Next build the Python bindings and pack them into a wheel. It is recommended to execute this step in a virtual environment.
 
 ```bash
 git clone https://github.com/cms-l1-globaltrigger/tm-table.git
@@ -63,5 +61,3 @@ python3 -m venv env
 pip install --upgrade pip wheel
 python setup.py bdist_wheel
 ```
-
-To create universal Python bindings use a `manylinux1` docker image and `audithwheel` to integrate dependent libraries.

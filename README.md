@@ -11,25 +11,25 @@ which makes it also possible to run multiple versions of utm in parallel.
 ### Python 3.9
 
 ```bash
-pip install https://github.com/cms-l1-globaltrigger/tm-table/releases/download/0.9.1/tm_table-0.9.1-cp39-cp39-manylinux1_x86_64.whl
+pip install https://github.com/cms-l1-globaltrigger/tm-table/releases/download/0.10.0/tm_table-0.10.0-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.whl
 ```
 
 ### Python 3.8
 
 ```bash
-pip install https://github.com/cms-l1-globaltrigger/tm-table/releases/download/0.9.1/tm_table-0.9.1-cp38-cp38-manylinux1_x86_64.whl
+pip install https://github.com/cms-l1-globaltrigger/tm-table/releases/download/0.10.0/tm_table-0.10.0-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl
 ```
 
 ### Python 3.7
 
 ```bash
-pip install https://github.com/cms-l1-globaltrigger/tm-table/releases/download/0.9.1/tm_table-0.9.1-cp37-cp37m-manylinux1_x86_64.whl
+pip install https://github.com/cms-l1-globaltrigger/tm-table/releases/download/0.10.0/tm_table-0.10.0-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.whl
 ```
 
 ### Python 3.6
 
 ```bash
-pip install https://github.com/cms-l1-globaltrigger/tm-table/releases/download/0.9.1/tm_table-0.9.1-cp36-cp36m-manylinux1_x86_64.whl
+pip install https://github.com/cms-l1-globaltrigger/tm-table/releases/download/0.10.0/tm_table-0.10.0-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.whl
 ```
 
 ## Build instructions
@@ -46,19 +46,20 @@ First check out and build all utm libraries.
 ```bash
 git clone https://gitlab.cern.ch/cms-l1t-utm/utm.git
 cd utm
-git checkout utm_0.9.1
+git checkout utm_0.10.0
 ./configure # create makefiles
 make all CPPFLAGS='-DNDEBUG -DSWIG'  # compile with -DSWIG
 . env.sh  # source paths
 cd ..
 ```
 
-Next build the Python bindings and pack them into a wheel. It is recommended to execute this step in a virtual environment.
+Next build the Python bindings and pack them into a wheel. It is recommended to
+execute this step in a virtual environment.
 
 ```bash
 git clone https://github.com/cms-l1-globaltrigger/tm-table.git
 cd tm-table
-git checkout 0.9.1
+git checkout 0.10.0
 python3 -m venv env
 . env/bin/activate
 pip install --upgrade pip wheel

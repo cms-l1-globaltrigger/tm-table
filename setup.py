@@ -7,7 +7,7 @@ import os
 from setuptools import setup, Extension
 import setuptools.command.build_py
 
-UTM_VERSION = '0.10.0'
+UTM_VERSION = '0.11.0'
 PACKAGE_NAME = 'tmTable'
 PACKAGE_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), PACKAGE_NAME))
 
@@ -21,6 +21,7 @@ if not UTM_XSD_DIR:
 
 XERCES_LIB_DIR = os.environ.get('XERCES_LIB_DIR', os.path.dirname(__file__))
 
+
 def load_version(f):
     """Load version from `version.h` file."""
     content = f.read()
@@ -30,13 +31,16 @@ def load_version(f):
         versions.append(version)
     return '.'.join(versions)
 
+
 def copy_files(sources, dest):
     """Copy files to destination directory."""
     for src in sources:
         shutil.copy(src, os.path.join(dest, os.path.basename(src)))
 
+
 with open(os.path.join(UTM_ROOT, PACKAGE_NAME, 'include', 'utm', PACKAGE_NAME, 'version.h')) as f:
     assert UTM_VERSION == load_version(f)
+
 
 class BuildPyCommand(setuptools.command.build_py.build_py):
     """Custom build command."""
@@ -68,6 +72,7 @@ class BuildPyCommand(setuptools.command.build_py.build_py):
         # run actual build command
         setuptools.command.build_py.build_py.run(self)
 
+
 tmTable_ext = Extension(
     name='_tmTable',
     define_macros=[('SWIG', '1'),],
@@ -92,11 +97,7 @@ tmTable_ext = Extension(
 )
 
 setup(
-    name='tm-table',
     version=UTM_VERSION,
-    author="Bernhard Arnold",
-    author_email="bernhard.arnold@cern.ch",
-    description="""Python bindings for tmTable""",
     ext_modules=[tmTable_ext],
     cmdclass={
         'build_py': BuildPyCommand,
@@ -109,5 +110,4 @@ setup(
             '*.i',
         ]
     },
-    license="GPLv3",
 )

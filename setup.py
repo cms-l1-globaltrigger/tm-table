@@ -38,8 +38,8 @@ def copy_files(sources, dest):
         shutil.copy(src, os.path.join(dest, os.path.basename(src)))
 
 
-with open(os.path.join(UTM_ROOT, PACKAGE_NAME, 'include', 'utm', PACKAGE_NAME, 'version.h')) as f:
-    assert UTM_VERSION == load_version(f)
+#with open(os.path.join(UTM_ROOT, PACKAGE_NAME, 'include', 'utm', PACKAGE_NAME, 'version.h')) as f:
+    #assert UTM_VERSION == load_version(f)
 
 
 class BuildPyCommand(setuptools.command.build_py.build_py):

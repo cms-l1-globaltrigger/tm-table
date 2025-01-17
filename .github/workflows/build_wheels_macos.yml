@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build_wheels:
     name: Build wheels on MacOS
-    runs-on: macos-11
+    runs-on: macos-12
     env:
       MACOSX_DEPLOYMENT_TARGET: '10.9'
       UTM_VERSION: '0.13.0'

@@ -3,7 +3,7 @@
 
 mkdir -p build
 cd build
-curl -OL https://dlcdn.apache.org//xerces/c/3/sources/xerces-c-${XERCES_C_VERSION}.tar.gz
+curl -L https://github.com/apache/xerces-c/archive/v${XERCES_C_VERSION}.tar.gz --output xerces-c-${XERCES_C_VERSION}.tar.gz
 tar xzf xerces-c-${XERCES_C_VERSION}.tar.gz
 cd xerces-c-${XERCES_C_VERSION}
 ./configure --prefix=${XERCES_C_BASE}

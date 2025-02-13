@@ -1,4 +1,4 @@
-name: wheel
+name: Build package
 
 on: [push]
 
@@ -6,26 +6,21 @@ jobs:
   build_wheel:
     runs-on: ubuntu-latest
     env:
-      MODULE: tmEventSetup
       UTM_VERSION: 0.13.0
+      MODULE: tmEventSetup
     strategy:
       matrix:
-        python-version: ["3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Install build dependecies
       run: |
         sudo apt-get install -y libboost-dev libboost-system-dev libboost-filesystem-dev libxerces-c-dev swig
     - name: Build utm
       run: |
-        curl -L https://gitlab.cern.ch/cms-l1t-utm/utm/-/archive/utm_${{ env.UTM_VERSION }}/utm-utm_${{ env.UTM_VERSION }}.tar.gz -O
-        tar xzf utm-utm_${{ env.UTM_VERSION }}.tar.gz
-        cd utm-utm_${{ env.UTM_VERSION }}
-        ./configure
-        make all -j4 CPPFLAGS='-DNDEBUG -DSWIG'
-        make install PREFIX=.
+        python3 .github/build.py --utm-version=${{ env.UTM_VERSION }} --install-prefix=${GITHUB_WORKSPACE}/dist
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -34,11 +29,11 @@ jobs:
         pip install build wheel
     - name: Build wheel
       run: |
-        export UTM_BASE="$(pwd)/utm-utm_${{ env.UTM_VERSION }}"
-        python -m build --wheel
+        export UTM_BASE=${GITHUB_WORKSPACE}/dist
+        python -m build
         python -m pip install dist/*-linux_x86_64.whl
     - name: Test module
       run: |
-        export LD_LIBRARY_PATH="$(pwd)/utm-utm_${{ env.UTM_VERSION }}:$LD_LIBRARY_PATH"
+        export LD_LIBRARY_PATH=${GITHUB_WORKSPACE}/dist/lib
         python -m ${{ env.MODULE }}.__init__
-        python -c 'from ${{ env.MODULE }} import __version__; print(__version__)'
+        python -c 'from ${{ env.MODULE }} import __version__; print(__version__); assert __version__ == "${{ env.UTM_VERSION }}"'

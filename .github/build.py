@@ -37,6 +37,7 @@ class BoostBuilder(Builder):
         run("tar", "xf", f"boost_{fs_version}.tar.gz", "-C", self.build_dir)
 
     def build(self):
+        fs_version = self.version.replace(".", "_")
         os.chdir(self.build_dir)
         os.chdir(f"boost_{fs_version}")
         b2_options = [

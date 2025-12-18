@@ -31,9 +31,9 @@ class Builder:
 class BoostBuilder(Builder):
     def fetch(self):
         os.chdir(self.build_dir)
-        url = f"https://github.com/boostorg/boost/releases/download/boost-{self.version}/boost-{self.version}.tar.xz"
-        urlretrieve(url, f"boost-{self.version}.tar.xz")
-        run("tar", "xf", f"boost-{self.version}.tar.xz", "-C", self.build_dir)
+        url = f"https://archives.boost.io/release/{self.version}/source/boost_{self.version.replace(".", "_")}.tar.gz"
+        urlretrieve(url, f"boost-{self.version}.tar.gz")
+        run("tar", "xf", f"boost-{self.version}.tar.gz", "-C", self.build_dir)
 
     def build(self):
         os.chdir(self.build_dir)

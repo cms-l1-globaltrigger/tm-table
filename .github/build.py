@@ -97,7 +97,7 @@ class UtmBuilder(Builder):
         run("./configure")
         make_options = [
             f"-j{self.cpu_count}",
-            "AR='c++ -shared -fPIC -Wl,-headerpad_max_install_names'",  # fix macos install_name_tool issues
+            "AR=c++ -shared -fPIC -Wl,-headerpad_max_install_names",  # fix macos install_name_tool issues
             "CPPFLAGS='-DNDEBUG -DSWIG'",
         ]
         if self.boost_prefix:

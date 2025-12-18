@@ -4,8 +4,8 @@ on: [push, workflow_dispatch]
 
 env:
   UTM_VERSION: 0.14.0
-  BOOST_VERSION: 1.84.0
-  XERCES_C_VERSION: 3.2.5
+  BOOST_VERSION: 1.90.0
+  XERCES_C_VERSION: 3.3.0
 
 jobs:
   build_wheels_linux:
@@ -34,7 +34,7 @@ jobs:
         path: ./wheelhouse/*.whl
   build_wheels_macos:
     name: Build wheels for MacOS
-    runs-on: macos-13
+    runs-on: macos-15
     env:
       MACOSX_DEPLOYMENT_TARGET: '10.9'
       CIBW_SKIP: pp*

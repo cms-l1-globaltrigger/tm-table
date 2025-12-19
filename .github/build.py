@@ -1,5 +1,6 @@
 import argparse
 import os
+import platform
 import subprocess
 from urllib.request import urlretrieve
 
@@ -97,9 +98,10 @@ class UtmBuilder(Builder):
         run("./configure")
         make_options = [
             f"-j{self.cpu_count}",
-            "AR=c++ -shared -fPIC -Wl,-headerpad_max_install_names",  # fix macos install_name_tool issues
             "CPPFLAGS='-DNDEBUG -DSWIG'",
         ]
+        if platform.system() == "Darwin":
+            make_options.append("AR=c++ -shared -fPIC -Wl,-headerpad_max_install_names")  # fix macos install_name_tool issues
         if self.boost_prefix:
             make_options.append(f"BOOST_BASE={self.boost_prefix}")
         if self.xerces_c_prefix:

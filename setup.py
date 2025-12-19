@@ -1,8 +1,9 @@
 import glob
+import os
+import platform
 import re
 import shutil
 import subprocess
-import os
 
 from setuptools import setup, Extension
 import setuptools.command.build_py
@@ -17,6 +18,7 @@ if not UTM_BASE:
 
 BOOST_BASE = os.environ.get("BOOST_BASE", "")
 XERCES_C_BASE = os.environ.get("XERCES_C_BASE", "")
+
 
 class BuildPyCommand(setuptools.command.build_py.build_py):
     """Custom build command."""
@@ -57,6 +59,14 @@ class BuildPyCommand(setuptools.command.build_py.build_py):
         # run actual build command
         setuptools.command.build_py.build_py.run(self)
 
+
+def get_extra_link_args():
+    extra_link_args = []
+    if platform.system() == "Darwin":
+        extra_link_args.append("-Wl,-headerpad_max_install_names")  # macos install_name_tool issues
+    return extra_link_args
+
+
 tmTable_ext = Extension(
     name="_tmTable",
     define_macros=[("SWIG", "1"), ("DNDEBUG", "1")],
@@ -74,7 +84,8 @@ tmTable_ext = Extension(
         os.path.join(UTM_BASE, "lib"),
     ],
     libraries=["xerces-c", "tmutil", "tmxsd", "tmtable"],
-    extra_compile_args=["-std=c++11", "-O2"]
+    extra_compile_args=["-std=c++11", "-O2"],
+    extra_link_args=get_extra_link_args()
 )
 
 setup(

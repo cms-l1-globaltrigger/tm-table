@@ -1,7 +1,8 @@
 import argparse
-import glob
 import os
+import shutil
 import subprocess
+from pathlib import Path
 from urllib.request import urlretrieve
 
 DEFAULT_UTM_VERSION = "0.14.0"
@@ -108,9 +109,10 @@ class UtmBuilder(Builder):
             make_options.append(f"XERCES_C_BASE={self.xerces_c_prefix}")
         run("make", "all", *make_options)
         run("make", "install", f"PREFIX={self.install_prefix}")
-        # patch missing XSD files
-        for xsd_file in [f for f in glob.glob("tmXsd/*.xsd") if not f.startswith("_")]:
-            run("install", "-D", xsd_file, self.install_prefix)
+        # HACK: patch missing XSD files
+        Path(self.install_prefix).mkdir(parents=True, exist_ok=True)
+        for f in Path("tmXsd").glob("[!_]*.xsd"):
+            shutil.copy2(f, Path(self.install_prefix) / f.name, follow_symlinks=True)
 
 
 def parse_args():

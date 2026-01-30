@@ -107,6 +107,9 @@ class UtmBuilder(Builder):
             make_options.append(f"XERCES_C_BASE={self.xerces_c_prefix}")
         run("make", "all", *make_options)
         run("make", "install", f"PREFIX={self.install_prefix}")
+        # patch missing XSD files
+        for xsd_file in [f for f in glob.glob("tmXsd/*.xsd") if not f.startswith("_")]:
+            run("install", "-DC", xsd_file, self.install_prefix)
 
 
 def parse_args():
